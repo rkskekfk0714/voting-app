@@ -1,0 +1,68 @@
+# 공통 설정
+namespace: voting-app
+
+# Vote 서비스
+vote:
+  replicas: 2
+  image:
+    repository: rkskekfk0714/vote
+    tag: v1
+  service:
+    type: NodePort
+    port: 5000
+    nodePort: 31000
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 500m
+      memory: 256Mi
+
+# Result 서비스
+result:
+  replicas: 1
+  image:
+    repository: rkskekfk0714/result
+    tag: v1
+  service:
+    type: NodePort
+    port: 4000
+    nodePort: 31001
+
+# Worker 서비스
+worker:
+  replicas: 1
+  image:
+    repository: rkskekfk0714/worker
+    tag: v1
+
+# Redis
+redis:
+  image:
+    repository: redis
+    tag: 7-alpine
+
+# PostgreSQL
+postgres:
+  image:
+    repository: postgres
+    tag: 16-alpine
+  storage:
+    size: 5Gi
+  credentials:
+    user: postgres
+    password: postgres123
+    database: votingdb
+
+# Ingress
+ingress:
+  enabled: true
+  host: voting.local
+
+# HPA
+hpa:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 10
+  targetCPU: 50
