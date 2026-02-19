@@ -3,7 +3,7 @@ namespace: voting-app
 
 # Vote 서비스
 vote:
-  replicas: 2
+  replicas: 3 
   image:
     repository: rkskekfk0714/vote
     tag: v1
